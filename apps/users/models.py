@@ -75,6 +75,16 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
             self.is_staff = False
         super().save(*args, **kwargs)
 
+    def has_perm(self, perm: str, obj: Any | None = None) -> bool:
+        if self.is_active and self.role in STAFF_ROLES:
+            return True
+        return super().has_perm(perm, obj)
+
+    def has_module_perms(self, app_label: str) -> bool:
+        if self.is_active and self.role in STAFF_ROLES:
+            return True
+        return super().has_module_perms(app_label)
+
 
 class StudentProfile(TimeStampedModel):
     user = models.OneToOneField(

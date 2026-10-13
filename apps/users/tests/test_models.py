@@ -14,6 +14,9 @@ class UserRoleTests(TestCase):
         self.assertTrue(commandant.is_staff)
         self.assertTrue(security.is_staff)
         self.assertFalse(student.is_staff)
+        self.assertTrue(commandant.has_module_perms("users"))
+        self.assertTrue(security.has_perm("users.view_user"))
+        self.assertFalse(student.has_module_perms("users"))
 
     def test_student_role_removes_admin_access(self) -> None:
         user = self._create("staff@dormdesk.test", Role.COMMANDANT)
