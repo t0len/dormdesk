@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — DormDesk{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h1>DormDesk</h1>
+    {% if user.is_authenticated %}
+        <p>{{ user.last_name }} {{ user.first_name }}, роль: {{ user.get_role_display }}.</p>
+    {% else %}
+        <p>Система общежития. Студент регистрируется, смотрит комнаты и подаёт заявку на место.</p>
+        <p><a class="button" href="/register/">Регистрация студента</a></p>
+    {% endif %}
+</section>
+
+{% if show_student_links %}
+    <h2>Студенту</h2>
+    <div class="links">
+        <a href="/residency/">Заселение</a>
+        <a href="/tickets/">Заявка на ремонт</a>
+        <a href="/passes/">Гостевой пропуск</a>
+    </div>
+{% endif %}
+
+{% if show_admin_link %}
+    <h2>Сотруднику</h2>
+    <div class="links">
+        <a href="/admin/">Админка</a>
+    </div>
+{% endif %}
+{% endblock %}

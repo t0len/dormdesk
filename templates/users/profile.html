@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль — DormDesk{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h1>Профиль</h1>
+    <div class="profile-grid">
+        <span class="muted">Email</span>
+        <span>{{ user.email }}</span>
+        <span class="muted">Имя</span>
+        <span>{{ user.first_name }} {{ user.last_name }}</span>
+        <span class="muted">Роль</span>
+        <span>{{ user.get_role_display }}</span>
+        {% if is_student_profile and user.student_profile %}
+            <span class="muted">Студенческий</span>
+            <span>{{ user.student_profile.student_number }}</span>
+            <span class="muted">Факультет</span>
+            <span>{{ user.student_profile.faculty }}</span>
+        {% endif %}
+    </div>
+    {% if form %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Сохранить</button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}
