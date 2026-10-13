@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}DormDesk{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="/">DormDesk</a>
+        <nav class="menu">
+            <a href="/">Главная</a>
+            <a href="/housing/">Корпуса</a>
+            <a href="/residency/">Заселение</a>
+            <a href="/tickets/">Ремонт</a>
+            <a href="/passes/">Пропуска</a>
+            {% if user.is_authenticated %}
+                <a href="/profile/">Профиль</a>
+                <a href="/password/">Пароль</a>
+                <form method="post" action="/logout/">
+                    {% csrf_token %}
+                    <button type="submit">Выйти</button>
+                </form>
+            {% else %}
+                <a href="/login/">Вход</a>
+                <a href="/register/">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main class="page">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
