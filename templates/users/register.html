@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация — DormDesk{% endblock %}
+
+{% block content %}
+<section class="card">
+    <h1>Регистрация студента</h1>
+    <p class="muted">Коменданта и охрану создают в админке. Здесь регистрируется только студент.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать аккаунт</button>
+    </form>
+</section>
+{% endblock %}
