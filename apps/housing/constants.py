@@ -1,7 +1,7 @@
 from django.db import models
 
 class RoomType(models.TextChoices):
-    Double = "double", "Двухместная"
+    DOUBLE = "double", "Двухместная"
     TRIPLE = "triple", "Трехместная"
     QUAD = "quad", "Четырехместная"
 

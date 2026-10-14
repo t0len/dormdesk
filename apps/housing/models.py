@@ -8,7 +8,7 @@ from apps.housing.constants import BedState, RoomGender, RoomType
 class Building(TimeStampedModel):
     name = models.CharField("Название", max_length = 100)
     address = models.CharField("Адресс", max_length = 200)
-    discription = models.Charfield("Описание", blank = True )
+    description = models.TextField("Описание", blank = True )
     is_active = models.BooleanField("Активен", default = True)
     commandant = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -21,7 +21,7 @@ class Building(TimeStampedModel):
     security = models.ManyToManyField (
         settings.AUTH_USER_MODEL,
         blank = True,
-        related_name = "secured buildings",
+        related_name = "secured_buildings",
         verbose_name = "Охрана",
     )
 
@@ -36,23 +36,23 @@ class Floor(TimeStampedModel):
     building = models.ForeignKey(
         Building,
         on_delete = models.CASCADE,
-        relared_name = "floors",
+        related_name = "floors",
         verbose_name = "Корпус",
     )
     number = models.PositiveSmallIntegerField("Номер этажа")
 
     class Meta:
-        verbose_name = "Этаж",
-        verbose_name_plural = "Этажи",
+        verbose_name = "Этаж"
+        verbose_name_plural = "Этажи"
         constraints = [
-            models.UniqueConstraints(
+            models.UniqueConstraint(
                 fields = ["building", "number"],
                 name = "unique_building_floor"
             )
         ]
 
-        def __str__(self) ->str:
-            return f"{self.building.name} - Этаж {self.number}"
+    def __str__(self) ->str:
+        return f"{self.building.name} - Этаж {self.number}"
 
 class Room(TimeStampedModel):
     floor = models.ForeignKey(
@@ -89,7 +89,7 @@ class Room(TimeStampedModel):
 
 class Bed(TimeStampedModel):
     room = models.ForeignKey(
-        "Floor",
+        "Room",
         on_delete = models.CASCADE,
         related_name = "beds",
         verbose_name = "Комната",
@@ -107,7 +107,7 @@ class Bed(TimeStampedModel):
         verbose_name_plural = "Места",
         constraints = [
             models.UniqueConstraint(
-                field = ["room", "number"], name = "unique_room_bed"
+                fields = ["room", "number"], name = "unique_room_bed"
             )
         ]
 
