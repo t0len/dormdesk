@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "container mt-4">
+    <h2>Корпус общежития</h2>
+    <div class = "list group mt-3">
+        {% for building in buildings %}
+            <a href = "{% url 'housing:building_detail' building.pk %}" class = "list-group-items list-group-item-action">
+                <h5 class = "mb-1"> {{building.name}} </h5>
+                <p class = "mb-1"> {{building.address}} </p>
+                <small class = "text-muted"> {{building.description}} </small>
+            </a>
+            {% empty %}
+            <p class = "text-muted"> Нет активных корпусов. </p>
+            {% endfor %}
+    </div>
+</div>
+{% endblock %}

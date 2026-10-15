@@ -6,7 +6,6 @@ from django.views.generic import DetailView, ListView
 
 from apps.housing.models import Building, Room
 
-
 try:
     from apps.residency.services import bed_is_occupied
 except ImportError:
@@ -24,7 +23,7 @@ class BuildingListView(ListView):
         return Building.objects.filter(is_active=True)
 
 class BuildingDetailView(DetailView):
-    model = Building 
+    model = Building
     template_name = "housing/building_detail.html"
 
     context_object_name = "building"

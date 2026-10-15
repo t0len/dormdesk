@@ -10,7 +10,6 @@ admin.site.index_title = "Общежитие"
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("apps.users.urls")),
-    path("housing/", include("apps.housing.urls")),
     path("residency/", include("apps.residency.urls")),
     path("tickets/", include("apps.tickets.urls")),
     path("passes/", include("apps.passes.urls")),

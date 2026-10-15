@@ -71,4 +71,3 @@ class HousingModelTest(TestCase):
             self.assertEqual(Floor.objects.count(), 3)
             self.assertEqual(Room.objects.count(), 5)
             self.assertEqual(Bed.objects.count(), 8)
-        

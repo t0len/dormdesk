@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'housing:building_list' %}">Корпуса</a></li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'housing:building_detail' room.floor.building.pk %}">
+                    {{ room.floor.building.name }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Комната {{ room.number }}</li>
+        </ol>
+    </nav>
+
+    <h2>Комната №{{ room.number }}</h2>
+    <p class="text-muted">
+        <strong>Корпус:</strong> {{ room.floor.building.name }} | 
+        <strong>Этаж:</strong> {{ room.floor.number }} | 
+        <strong>Тип:</strong> {{ room.get_room_type_display }} | 
+        <strong>Категория:</strong> {{ room.get_gender_display }}
+    </p>
+
+    <hr class="my-4">
+
+    <h3>Места в комнате</h3>
+    <div class="row">
+        {% for item in beds_with_status %}
+            <div class="col-md-3 mb-3">
+                <div class="card text-center {% if item.is_occupied %}border-danger{% else %}border-success{% endif %} h-100">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="card-title">Место №{{ item.bed.number }}</h5>
+                            <p class="card-text text-muted small mb-2">
+                                Состояние: {{ item.bed.get_state_display }}
+                            </p>
+                        </div>
+                        <div>
+                            {% if item.is_occupied %}
+                                <span class="badge bg-danger">Занято</span>
+                            {% else %}
+                                <span class="badge bg-success">Свободно</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">В этой комнате пока нет мест.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

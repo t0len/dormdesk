@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "container mt-4">
+    <nav aria-label = "breadcrumb">
+        <ol class = "breadcrumb">
+            <li class = "breadcrum-item"><a href="{% url 'housing:building_list' %}">Корпуса</a></li>
+            <li class = "breadcrumb-item" aria-current="page"> {{ building.name }} </li>
+        </ol>
+    </nav>
+
+    <h2> {{building_name}} </h2>
+    <p><strong>Адрес:</strong> {{ building.address }}</p>
+    <p>{{ building.description }}</p>
+
+    <hr class="my-4">
+
+    <h3>Этажи и комнаты</h3>
+    {% for floor in floors %}
+        <div class="card mb-3">
+            <div class="card-header bg-light">
+                <strong>Этаж №{{ floor.number }}</strong>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for room in floor.rooms.all %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Комната №{{ room.number }}</h5>
+                                    <p class="card-text text-muted mb-2">
+                                        Тип: {{ room.get_room_type_display }}<br>
+                                        Для кого: {{ room.get_gender_display }}<br>
+                                        Всего мест: {{ room.beds.count }}
+                                    </p>
+                                    <a href="{% url 'housing:room_detail' room.pk %}" class="btn btn-sm btn-primary">Посмотреть места</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted m-0">На этом этаже пока нет комнат.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">В данном корпусе пока нет этажей.</p>
+    {% endfor %}
+</div>
+{% endblock %}
