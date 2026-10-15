@@ -16,7 +16,7 @@ class Building(TimeStampedModel):
         null = True,
         blank = True,
         related_name = "managed_buildings",
-        verbose_name = "Комендант"
+        verbose_name = "Комендант",
     )
     security = models.ManyToManyField (
         settings.AUTH_USER_MODEL,
@@ -103,8 +103,8 @@ class Bed(TimeStampedModel):
     )
 
     class Meta:
-        verbose_name = "Место",
-        verbose_name_plural = "Места",
+        verbose_name = "Место"
+        verbose_name_plural = "Места"
         constraints = [
             models.UniqueConstraint(
                 fields = ["room", "number"], name = "unique_room_bed"

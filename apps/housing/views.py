@@ -42,7 +42,7 @@ class RoomDetailView(DetailView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        room = self.object()
+        room = self.object
         today = date.today()
 
         beds_with_status = []
