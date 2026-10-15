@@ -14,6 +14,7 @@ urlpatterns = [
     path("residency/", include("apps.residency.urls")),
     path("tickets/", include("apps.tickets.urls")),
     path("passes/", include("apps.passes.urls")),
+    path("housing/", include("apps.housing.urls"))
 ]
 
 if settings.DEBUG:
