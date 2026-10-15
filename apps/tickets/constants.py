@@ -1,5 +1,10 @@
 from django.db import models
 
+MAXIMUM_LENGTH_FOR_CONSTANTS = 20
+MAXIMUM_TITLE_LENGTH = 100
+MAXIMUM_COMMENT_LENGTH = 200
+COMMENT_PREVIEW_LENGTH = 50
+
 
 class TicketCategory(models.TextChoices):
     PLUMBING = "plumbing", "Сантехника"

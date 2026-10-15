@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Ремонт — DormDesk{% endblock %}
+
+{% block content %}
+<h1>Мои заявки на ремонт</h1>
+
+{% if active_residency %}
+    <p>
+        <a href="{% url 'tickets:create' %}">Создать заявку</a>
+    </p>
+{% else %}
+    <p>Подать заявку на ремонт можно после заселения</p>
+{% endif %}
+
+{% for ticket in tickets %}
+    <article>
+        <h2>
+            <a href="{% url 'tickets:detail' ticket.pk %}">
+                {{ ticket.title }}
+            </a>
+        </h2>
+
+        <p>Категория: {{ ticket.get_category_display }}</p>
+        <p>Приоритет: {{ ticket.get_priority_display }}</p>
+        <p>Статус: {{ ticket.get_status_display }}</p>
+        <p>Создана: {{ ticket.created_at|date:"d.m.Y H:i" }}</p>
+    </article>
+{% empty %}
+    <p>У вас пока нет заявок на ремонт.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Создать заявку — DormDesk{% endblock %}
+
+{% block content %}
+<h1>Создать заявку на ремонт</h1>
+
+{% if form %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Создать заявку</button>
+    </form>
+{% else %}
+    <p>{{ no_residency_message }}</p>
+{% endif %}
+
+<p><a href="{% url 'tickets:list' %}">К списку заявок</a></p>
+{% endblock %}

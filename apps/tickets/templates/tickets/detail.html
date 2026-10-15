@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}{{ ticket.title }} — DormDesk{% endblock %}
+
+{% block content %}
+<h1>{{ ticket.title }}</h1>
+
+<p>Категория: {{ ticket.get_category_display }}</p>
+<p>Приоритет: {{ ticket.get_priority_display }}</p>
+<p>Статус: {{ ticket.get_status_display }}</p>
+<p>Создана: {{ ticket.created_at|date:"d.m.Y H:i" }}</p>
+<p>Обновлена: {{ ticket.updated_at|date:"d.m.Y H:i" }}</p>
+<p>Заселение: {{ ticket.residency }}</p>
+
+{% if ticket.assigned_to %}
+    <p>Исполнитель: {{ ticket.assigned_to }}</p>
+{% endif %}
+
+{% if ticket.closed_at %}
+    <p>Закрыта: {{ ticket.closed_at|date:"d.m.Y H:i" }}</p>
+{% endif %}
+
+<h2>Описание</h2>
+{{ ticket.description|linebreaks }}
+
+{% if ticket.photo %}
+    <p>
+        <a href="{{ ticket.photo.url }}">
+            <img
+                src="{{ ticket.photo.url }}"
+                alt="Фото неисправности"
+                style="max-width: 100%; height: auto;"
+            >
+        </a>
+    </p>
+{% endif %}
+
+<h2>Комментарии</h2>
+
+{% for comment in comments %}
+    <article>
+        <p>
+            <strong>{{ comment.author }}</strong>
+            — {{ comment.created_at|date:"d.m.Y H:i" }}
+        </p>
+
+        {{ comment.text|linebreaks }}
+    </article>
+{% empty %}
+    <p>Комментариев пока нет.</p>
+{% endfor %}
+
+{% if can_comment %}
+    <h2>Добавить комментарий</h2>
+
+    <form
+        method="post"
+        action="{% url 'tickets:comment_create' ticket.pk %}"
+    >
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+
+        <button type="submit">Отправить комментарий</button>
+    </form>
+{% else %}
+    {{ comment_form.non_field_errors }}
+    <p>Заявка закрыта. Добавление комментариев недоступно.</p>
+{% endif %}
+
+<p><a href="{% url 'tickets:list' %}">К списку заявок</a></p>
+{% endblock %}
