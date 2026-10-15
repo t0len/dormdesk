@@ -17,7 +17,7 @@ except ImportError:
 class BuildingListView(ListView):
     model = Building
     template_name = "housing/building_list.html"
-    context_object_name = "Buildings"
+    context_object_name = "buildings"
 
     def get_queryset(self) -> QuerySet[Building]:
         return Building.objects.filter(is_active=True)
@@ -31,18 +31,18 @@ class BuildingDetailView(DetailView):
     def get_context_data(self, **kwargs:Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        building = self.get_object
+        building = self.get_object()
         context["floors"] = building.floors.prefetch_related("rooms__beds").all()
         return context
 
 class RoomDetailView(DetailView):
     model = Room
-    template_name = "housing?room_detail.http"
+    template_name = "housing/room_detail.html"
     context_object_name = "room"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        room = self.objects
+        room = self.object()
         today = date.today()
 
         beds_with_status = []

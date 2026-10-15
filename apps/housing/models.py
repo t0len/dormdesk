@@ -51,7 +51,7 @@ class Floor(TimeStampedModel):
             )
         ]
 
-    def __str__(self) ->str:
+    def __str__(self) -> str:
         return f"{self.building.name} - Этаж {self.number}"
 
 class Room(TimeStampedModel):
@@ -76,8 +76,8 @@ class Room(TimeStampedModel):
     )
 
     class Meta:
-        verbose_name = "Комната",
-        verbose_name_plural = "Комнаты",
+        verbose_name = "Комната"
+        verbose_name_plural = "Комнаты"
         constraints = [
             models.UniqueConstraint(
                 fields = ["floor", "number"], name = "unique_floor_room"
